@@ -13,7 +13,9 @@ import {
 interface IProps {
   title?: StyleProp<TextStyle>;
   button?: StyleProp<ViewStyle>;
-  navigation?: any;
+  navigation?: {
+    navigate: Function;
+  };
 }
 
 interface Styles {
@@ -33,7 +35,7 @@ export default function Home(props: IProps) {
           justifyContent: 'center'
         }}
       >
-        <Text style={[styles.title]} testID="home-title">
+        <Text style={styles.title} testID="home-title">
           You have no activity yet
         </Text>
       </View>
@@ -43,7 +45,7 @@ export default function Home(props: IProps) {
           Get Started
         </Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate('ActivityPage')}
+          onPress={() => navigation?.navigate('ActivityPage')}
           style={[styles.button, button]}
           testID="get-started-action"
         >
@@ -59,9 +61,12 @@ const styles = StyleSheet.create<Styles>({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    padding: 20
+    padding: 20,
+    backgroundColor: '#fff'
   },
   title: {
+    fontWeight: '200',
+    fontFamily: 'Open Sans',
     fontSize: 32,
     lineHeight: 43.58,
     marginTop: '-150%'
@@ -70,7 +75,8 @@ const styles = StyleSheet.create<Styles>({
     backgroundColor: '#BB0A21',
     width: 277,
     borderRadius: 10,
-    padding: 20
+    padding: 20,
+    color: '#fff'
   },
   getStarted: {
     fontSize: 16,
