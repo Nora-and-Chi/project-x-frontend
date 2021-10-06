@@ -13,6 +13,7 @@ import {
 interface IProps {
   title?: StyleProp<TextStyle>;
   button?: StyleProp<ViewStyle>;
+  navigation?: any;
 }
 
 interface Styles {
@@ -24,7 +25,7 @@ interface Styles {
 }
 
 export default function Home(props: IProps) {
-  const { button } = props;
+  const { button, navigation } = props;
   return (
     <View style={styles.container}>
       <View
@@ -42,7 +43,7 @@ export default function Home(props: IProps) {
           Get Started
         </Text>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => navigation.navigate('ActivityPage')}
           style={[styles.button, button]}
           testID="get-started-action"
         >
