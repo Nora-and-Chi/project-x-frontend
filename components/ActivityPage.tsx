@@ -1,5 +1,6 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
+import { AntDesign } from '@expo/vector-icons';
 import { daysOfTheWeek } from '../utils/constants';
 import {
   StyleSheet,
@@ -20,6 +21,8 @@ interface Styles {
   button: ViewStyle;
   daysOfTheWeekContainer: ViewStyle;
   selectedDaysOfWeek: ViewStyle;
+  selectedButtonText: TextStyle;
+  unSelectedButtonText: TextStyle;
 }
 
 interface IValues {
@@ -30,15 +33,17 @@ interface IValues {
   selectedDays?: any;
   date?: any;
 }
-interface IProps {
+interface ActivityPageProps {
   navigation?: {
     navigate: Function;
   };
 }
 
-export default function ActivityPage(props: IProps) {
+export default function ActivityPage({ navigation }: ActivityPageProps) {
   const [values, setValues] = useState<IValues>({ date: new Date() });
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+
+  const disableButton = !values.name || !values.motivation;
 
   function handleChange(name: string, event: string): void {
     setValues({
@@ -116,11 +121,8 @@ export default function ActivityPage(props: IProps) {
                 <Text
                   style={
                     selectedDays.includes(day)
-                      ? {
-                          color: '#fff',
-                          fontWeight: 'bold'
-                        }
-                      : { fontWeight: 'bold' }
+                      ? styles.selectedButtonText
+                      : styles.unSelectedButtonText
                   }
                 >
                   {day}
@@ -166,11 +168,20 @@ export default function ActivityPage(props: IProps) {
           }}
         >
           <TouchableOpacity
-            onPress={() => {}}
-            style={styles.button}
+            onPress={() => navigation?.navigate('CameraComponent')}
+            style={[
+              styles.button,
+              { backgroundColor: disableButton ? '#F5F5F5' : '#BB0A21' }
+            ]}
             testID="get-started-action"
+            disabled={disableButton}
           >
-            <Text style={{ color: '#fff', textAlign: 'center' }}>Go</Text>
+            <AntDesign
+              name="arrowright"
+              size={30}
+              color="#fff"
+              style={{ color: '#fff', textAlign: 'center' }}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -186,7 +197,6 @@ const styles = StyleSheet.create<Styles>({
   },
   title: {
     fontWeight: '200',
-    fontFamily: 'Open Sans',
     fontSize: 32,
     lineHeight: 43.58
   },
@@ -201,7 +211,6 @@ const styles = StyleSheet.create<Styles>({
     borderColor: '#E7E4E4',
     borderRadius: 5,
     backgroundColor: '#F5F5F5',
-
     padding: 10
   },
   inputWrapper: {
@@ -230,7 +239,14 @@ const styles = StyleSheet.create<Styles>({
     backgroundColor: '#BB0A21',
     width: 277,
     borderRadius: 10,
-    padding: 20,
+    padding: 10,
     color: '#fff'
+  },
+  selectedButtonText: {
+    color: '#fff',
+    fontWeight: 'bold'
+  },
+  unSelectedButtonText: {
+    fontWeight: 'bold'
   }
 });
