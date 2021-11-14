@@ -1,5 +1,6 @@
 import React from 'react';
 import Home from './components/Home';
+import AllActivities from './components/AllActivities';
 import ActivityPage from './components/ActivityPage';
 import CameraComponent from './components/CameraComponent';
 import { enableScreens } from 'react-native-screens';
@@ -16,6 +17,7 @@ export default function App() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ActivityPage" component={ActivityPage} />
         <Stack.Screen name="CameraComponent" component={CameraComponent} />
+        <Stack.Screen name="All Activities" component={AllActivities} />
       </Stack.Navigator>
     </NavigationContainer>
   );

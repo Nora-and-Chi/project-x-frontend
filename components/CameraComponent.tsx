@@ -26,7 +26,13 @@ interface Styles {
   takePicture: ViewStyle;
 }
 
-export default function CameraComponent() {
+interface CameraComponentProps {
+  navigation?: {
+    navigate: Function;
+  };
+}
+
+export default function CameraComponent({ navigation }: CameraComponentProps) {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState<any>(null);
   const [flashMode, setFlashMode] = useState<any>('off');
@@ -100,6 +106,7 @@ export default function CameraComponent() {
           photo={capturedImage}
           retakePhoto={__retakePhoto}
           savePicture={__savePicture}
+          navigation={navigation}
         />
       ) : (
         <Camera
