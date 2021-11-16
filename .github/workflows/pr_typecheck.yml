@@ -1,20 +1,20 @@
-name: PR - Run Unit Tests
+name: PR - Run Typecheck
 on:
   pull_request:
     branches: [main]
   
 jobs:
-  unit-test:
+  typecheck:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup yarn and run tests
+      - name: Run typescript check
         uses: actions/setup-node@v2
         with:
           node-version: '14'
       - run: |
           npm install yarn -g
           yarn install
-          yarn test
+          yarn typecheck
