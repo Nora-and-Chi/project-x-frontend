@@ -7,11 +7,14 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run Jest
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup yarn and run tests
         uses: actions/setup-node@v2
         with:
           node-version: '14'
       - run: |
-          npm ci
-          npm test
+          npm install yarn -g
+          yarn install
+          npx jest
