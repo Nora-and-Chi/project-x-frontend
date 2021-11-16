@@ -3,14 +3,7 @@ import * as MediaLibrary from 'expo-media-library';
 import CameraPreview from './CameraPreview';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
-import {
-  View,
-  ViewStyle,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
+import { View, ViewStyle, Text, TextStyle, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface Styles {
   container: ViewStyle;
@@ -26,14 +19,18 @@ interface Styles {
   takePicture: ViewStyle;
 }
 
+type FlashModeType = 'off' | 'on' | 'auto';
+
+type CapturedImageType = {
+  uri: string;
+} | null;
+
 export default function CameraComponent() {
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [capturedImage, setCapturedImage] = useState<any>(null);
-  const [flashMode, setFlashMode] = useState<any>('off');
-  const [cameraType, setCameraType] = useState<any>(Camera.Constants.Type.back);
-  const [hasPermission, setHasPermission] = useState<string | boolean | null>(
-    null
-  );
+  const [capturedImage, setCapturedImage] = useState<CapturedImageType>(null);
+  const [flashMode, setFlashMode] = useState<FlashModeType>('off');
+  const [cameraType, setCameraType] = useState<'front' | 'back'>(Camera.Constants.Type.back);
+  const [hasPermission, setHasPermission] = useState<string | boolean | null>(null);
 
   let camera: any = Camera;
 
@@ -80,8 +77,10 @@ export default function CameraComponent() {
   };
 
   const __savePicture = async () => {
-    const uri = capturedImage.uri;
-    await MediaLibrary.saveToLibraryAsync(uri);
+    const uri = capturedImage?.uri;
+    if (uri) {
+      await MediaLibrary.saveToLibraryAsync(uri);
+    }
     __retakePhoto();
   };
 
@@ -96,11 +95,7 @@ export default function CameraComponent() {
   return (
     <View style={styles.container}>
       {previewVisible && capturedImage ? (
-        <CameraPreview
-          photo={capturedImage}
-          retakePhoto={__retakePhoto}
-          savePicture={__savePicture}
-        />
+        <CameraPreview photo={capturedImage} retakePhoto={__retakePhoto} savePicture={__savePicture} />
       ) : (
         <Camera
           flashMode={flashMode}
@@ -113,25 +108,12 @@ export default function CameraComponent() {
           <View style={styles.footerWrapper}>
             <View style={styles.footerContainer}>
               <View style={styles.takePictureContainer}>
-                <TouchableOpacity
-                  onPress={__takePicture}
-                  style={styles.takePicture}
-                />
+                <TouchableOpacity onPress={__takePicture} style={styles.takePicture} />
               </View>
-              <TouchableOpacity
-                onPress={__handleFlashMode}
-                style={styles.flashMode}
-              >
-                <Ionicons
-                  name={flashMode === 'on' ? 'flash' : 'flash-off'}
-                  size={50}
-                  color="white"
-                />
+              <TouchableOpacity onPress={__handleFlashMode} style={styles.flashMode}>
+                <Ionicons name={flashMode === 'on' ? 'flash' : 'flash-off'} size={50} color="white" />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={__switchCamera}
-                style={styles.cameraSwitch}
-              >
+              <TouchableOpacity onPress={__switchCamera} style={styles.cameraSwitch}>
                 <Ionicons name="ios-camera-reverse" size={50} color="white" />
               </TouchableOpacity>
             </View>
