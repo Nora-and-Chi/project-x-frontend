@@ -6,6 +6,7 @@ updates:
     target-branch: master
     schedule:
       interval: "daily"
+      time: "15:40"
       timezone: "CET"
     pull-request-branch-name:
       separator: "-"
