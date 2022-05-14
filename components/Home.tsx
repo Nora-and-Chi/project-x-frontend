@@ -1,4 +1,5 @@
 import React from 'react';
+import { AntDesign } from '@expo/vector-icons';
 import {
   StyleSheet,
   Text,
@@ -49,7 +50,12 @@ export default function Home(props: IProps) {
           style={[styles.button, button]}
           testID="get-started-action"
         >
-          <Text style={{ color: '#fff', textAlign: 'center' }}>Go</Text>
+          <AntDesign
+            name="arrowright"
+            size={30}
+            color="#fff"
+            style={{ color: '#fff', textAlign: 'center' }}
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -65,8 +71,6 @@ const styles = StyleSheet.create<Styles>({
     backgroundColor: '#fff'
   },
   title: {
-    fontWeight: '200',
-    fontFamily: 'Open Sans',
     fontSize: 32,
     lineHeight: 43.58,
     marginTop: '-150%'
@@ -75,7 +79,7 @@ const styles = StyleSheet.create<Styles>({
     backgroundColor: '#BB0A21',
     width: 277,
     borderRadius: 10,
-    padding: 20,
+    padding: 10,
     color: '#fff'
   },
   getStarted: {
